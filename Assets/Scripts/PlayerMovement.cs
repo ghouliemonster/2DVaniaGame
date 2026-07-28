@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed) 
         {
             //jump activated
-            playerRigidbody.velocity += new Vector2(0f, jumpSpeed);
+            playerRigidbody.linearVelocity += new Vector2(0f, jumpSpeed);
         }
     }
 
@@ -77,10 +77,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Run()
     {
-        Vector2 playerVelocity = new Vector2(moveInput.x * runSpeed, playerRigidbody.velocity.y);
-        playerRigidbody.velocity = playerVelocity;
+        Vector2 playerVelocity = new Vector2(moveInput.x * runSpeed, playerRigidbody.linearVelocity.y);
+        playerRigidbody.linearVelocity = playerVelocity;
 
-        bool playerHasHorizontalSpeed = Mathf.Abs(playerRigidbody.velocity.x) > Mathf.Epsilon;
+        bool playerHasHorizontalSpeed = Mathf.Abs(playerRigidbody.linearVelocity.x) > Mathf.Epsilon;
         myAnimator.SetBool("isRunning", playerHasHorizontalSpeed);
         
     }
@@ -89,11 +89,11 @@ public class PlayerMovement : MonoBehaviour
     void FlipSprite()
     {
         
-        bool playerHasHorizontalSpeed = Mathf.Abs(playerRigidbody.velocity.x) > Mathf.Epsilon;
+        bool playerHasHorizontalSpeed = Mathf.Abs(playerRigidbody.linearVelocity.x) > Mathf.Epsilon;
 
         if (playerHasHorizontalSpeed) 
         {
-            transform.localScale = new Vector2(Mathf.Sign(playerRigidbody.velocity.x), 1f);
+            transform.localScale = new Vector2(Mathf.Sign(playerRigidbody.linearVelocity.x), 1f);
         }
         
     }
@@ -109,11 +109,11 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        Vector2 climbVelocity = new Vector2(playerRigidbody.velocity.x, moveInput.y * climbSpeed);
-        playerRigidbody.velocity = climbVelocity;
+        Vector2 climbVelocity = new Vector2(playerRigidbody.linearVelocity.x, moveInput.y * climbSpeed);
+        playerRigidbody.linearVelocity = climbVelocity;
         playerRigidbody.gravityScale = 0f;
 
-        bool playerHasVerticalSpeed = Mathf.Abs(playerRigidbody.velocity.y) > Mathf.Epsilon;
+        bool playerHasVerticalSpeed = Mathf.Abs(playerRigidbody.linearVelocity.y) > Mathf.Epsilon;
         myAnimator.SetBool("isClimbing", playerHasVerticalSpeed);
     }
 
@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isAlive = false;
             myAnimator.SetTrigger("Dying");
-            playerRigidbody.velocity = deathKick;
+            playerRigidbody.linearVelocity = deathKick;
             FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }

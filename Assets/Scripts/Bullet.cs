@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        bulletRigidbody.velocity = new Vector2(xSpeed, 0f);
+        bulletRigidbody.linearVelocity = new Vector2(xSpeed, 0f);
     }
 
     void OnTriggerEnter2D(Collider2D other)
